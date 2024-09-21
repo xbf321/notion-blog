@@ -1,6 +1,6 @@
 module.exports = {
   schedule: {
-    interval: '5m',
+    interval: '30m',
     type: 'worker',
     env: [ 'prod' ],
   },

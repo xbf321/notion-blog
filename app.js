@@ -9,11 +9,10 @@ class AppBootHook {
     const { app } = this;
     const ctx = await app.createAnonymousContext();
 
-    
-
     if (app.env !== 'prod') {
       return;
     }
+
     // 生产环境检测，避免开发环境重复调用
     // 1. 检查 blog 表是否存在
     ctx.service.blog.initTableIfNotExists();

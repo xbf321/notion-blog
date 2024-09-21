@@ -6,9 +6,9 @@
     {% for item in site.tags %}
       <li>
         {% if tagName === item.name %}
-          <a href="{{ site.domain }}/tags/{{ item.name }}" class="hover:text-blue-500 italic font-black">#{{ item.name }}</a>
+          <a href="/tags/{{ item.name }}" class="hover:text-blue-500 italic font-black">#{{ item.name }}</a>
         {% else %}
-          <a href="{{ site.domain }}/tags/{{ item.name }}" class="hover:text-blue-500 italic">#{{ item.name }}</a>
+          <a href="/tags/{{ item.name }}" class="hover:text-blue-500 italic">#{{ item.name }}</a>
         {% endif %}
       </li>
     {% endfor %}

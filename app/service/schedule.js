@@ -140,6 +140,7 @@ class ScheduleService extends Service {
   async buildSitemapXMLFile() {
     this.logger.info('service.schedule -> buildSitemapXMLFile');
     const { POST_PROPERTY } = this.config.dbNameKeys;
+    const { siteInfo } = this.app.cache;
     const response = this.app.db.prepare(`SELECT data FROM blog WHERE name LIKE '${POST_PROPERTY}/%'`).all();
     const result = [];
     result.push('<?xml version="1.0" encoding="UTF-8"?>');
@@ -151,7 +152,7 @@ class ScheduleService extends Service {
         json = JSON.parse(data);
         const { href } = json;
         result.push('<url>');
-        result.push(`<loc>${href}</loc>`);
+        result.push(`<loc>${siteInfo.domain}/${href}</loc>`);
         result.push('</url>');
       } catch (err) {
         this.ctx.logger.error(err);

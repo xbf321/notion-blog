@@ -5,7 +5,7 @@
     {% if post.categories.length > 0 %}
     <span>
       {% for name in post.categories %}
-        <a class="hover:text-blue-500" href="{{ site.domain }}/categories/{{ name }}">{{ name }}</a>
+        <a class="hover:text-blue-500" href="/categories/{{ name }}">{{ name }}</a>
       {% endfor %}
     </span>
     {% endif %}

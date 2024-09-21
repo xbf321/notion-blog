@@ -23,7 +23,7 @@
 | fetch-notion-post-property-to-database.js  | 2h    | 下载 Notion 文章 property 到 SQLite |
 | fetch-notion-site-info-to-database.js  | 2h    | 下载站点信息以及站点配置到 SQLite |
 | transfer-file-to-aws.js  | 1h    | 使用 rclone 把之前下载到磁盘中的文件，同步到类 AWS 图床中 |
-| update-post-views-to-notion.js  | 5m    | 异步更新 Notion Post 浏览数。在 SQLite 存放是缓存数据，不能直接更新 SQLite，折中方案时，把浏览数存放到内存中，然后固定间隔累加浏览数，然后实时更新 Notion 数据 |
+| update-post-views-to-notion.js  | 2h    | 异步更新 Notion Post 浏览数。在 SQLite 存放是缓存数据，不能直接更新 SQLite，折中方案时，把浏览数存放到内存中，然后固定间隔累加浏览数，然后实时更新 Notion 数据 |
 | update-rclone-config.js  | 5m    | 把用户从 Notion 配置文件中的 rclone 文件内容，更新到机器中 |
 | update-site-info-cache.js  | 5m    | 更新 siteInfo 缓存 |
 
@@ -68,6 +68,46 @@ docker run -d -p 7110:7110 \
 | SITE_DOMAIN  | 博客域名，如 https://xingbaifang.com，不要有尾 /   |
 
 如何找到 NOTION_APP_KEY 和 NOTION_DATABASE_ID？
+
+### docker-compose 部署
+
+新建 **docker-compose.yaml** 文件，内容如下：
+
+```shell
+version: '3.9'
+services:
+  notion-blog:
+    container_name: notion-blog
+    image: xbf321/notion-blog:latest
+    volumes:
+      - ./notion-blog/logs:/root/logs
+      - ./notion-blog/data:/root/web/data
+    environment:
+      - NOTION_APP_KEY=key
+      - NOTION_DATABASE_ID=id
+      - SITE_DOMAIN=https://example.com
+    restart: unless-stopped
+    privileged: true
+    ports:
+      - 7110:7110
+```
+
+安装
+
+```shell
+docker-compose up -d
+```
+
+重新安装，执行：
+
+```shell
+# 停止容器
+docker-compose down
+# 获取最新 image
+docker-compose pull xbf321/notion-blog
+# 启动
+docker-compose up -d
+```
 
 ## 非 Docker 部署
 

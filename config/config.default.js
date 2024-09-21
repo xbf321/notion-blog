@@ -13,6 +13,8 @@ module.exports = appInfo => {
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1725678580974_1080';
 
+  config.timezone = '+08:00';
+
   config.onerror = {
     // 线上发生异常时，重定向到此页面
     errorPageUrl: '/500.html',

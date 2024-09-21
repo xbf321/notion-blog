@@ -4,7 +4,7 @@
   </h2>
   <div class="text-gray-400 text-xs gap-3">
     {% for name in post.categories %}
-      <a class="mr-2 hover:text-blue-500" href="{{ site.domain }}/categories/{{ name | escape }}">{{ name }}</a>
+      <a class="mr-2 hover:text-blue-500" href="/categories/{{ name | escape }}">{{ name }}</a>
     {% endfor %}
   </div>
   {% if post.summary %}

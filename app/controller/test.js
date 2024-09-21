@@ -1,5 +1,4 @@
 const _ = require('lodash');
-const blocks = require('../../mocks/page.json');
 const { Controller } = require('egg');
 
 class TestController extends Controller {

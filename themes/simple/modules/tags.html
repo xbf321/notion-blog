@@ -1,7 +1,7 @@
 <ul class="flex flex-wrap gap-2 text-xs">
   {% for name in post.tags %}
     <li>
-      <a href="{{ site.domain }}/tags/{{ name }}" class="p-1 rounded bg-gray-100 px-2 hover:text-blue-500"># {{ name }}</a>
+      <a href="/tags/{{ name }}" class="p-1 rounded bg-gray-100 px-2 hover:text-blue-500"># {{ name }}</a>
     </li>
   {% endfor %}
 </ul>

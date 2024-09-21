@@ -212,7 +212,7 @@ class NotionService extends Service {
           postInfo[key] = POST_PROPERTY_RULE[key](value);
         }
       });
-      postInfo.href = postInfo.slug ? `${config.siteDomain}/${postInfo.slug}` : `${config.siteDomain}/archives/${postInfo.id}`;
+      postInfo.href = postInfo.slug ? postInfo.slug : `/archives/${postInfo.id}`;
       list.results.push(postInfo);
     });
     return list;

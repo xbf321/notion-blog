@@ -1,7 +1,7 @@
 module.exports = {
   schedule: {
-    interval: '5m',
-    type: 'worker',
+    interval: '2h',
+    type: 'all',
     env: [ 'prod' ],
   },
   async task(ctx) {

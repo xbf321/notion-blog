@@ -1,0 +1,47 @@
+{
+  "name": "notion-blog",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "egg": {
+    "declarations": true
+  },
+  "dependencies": {
+    "@notionhq/client": "^2.2.15",
+    "better-sqlite3": "^11.3.0",
+    "clean-css": "^5.3.3",
+    "download": "^8.0.0",
+    "egg": "^3.17.5",
+    "egg-scripts": "2",
+    "egg-view-nunjucks": "^2.3.0",
+    "fs-extra": "^11.2.0",
+    "lodash": "^4.17.21",
+    "shelljs": "^0.8.5",
+    "ufo": "^1.5.4"
+  },
+  "devDependencies": {
+    "egg-bin": "6",
+    "egg-mock": "5",
+    "eslint": "8",
+    "eslint-config-egg": "13",
+    "tailwindcss": "^3.4.11"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "start": "egg-scripts start --title=notion-blog --port=7110",
+    "start:daemon": "egg-scripts start --daemon --title=notion-blog --port=7110",
+    "stop": "egg-scripts stop --title=notion-blog",
+    "dev": "egg-bin dev --port=7110",
+    "test": "npm run lint -- --fix && npm run test:local",
+    "test:local": "egg-bin test",
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xbf321/notion-blog"
+  },
+  "author": "xbf321",
+  "license": "MIT"
+}

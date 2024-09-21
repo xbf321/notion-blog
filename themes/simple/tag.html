@@ -1,0 +1,27 @@
+{% extends "./modules/layout.html" %}
+
+{% block content %}
+  <h1 class="border-b pb-1">所有标签</h1>
+  <ul class="flex flex-wrap gap-3 py-2">
+    {% for item in site.tags %}
+      <li>
+        {% if tagName === item.name %}
+          <a href="{{ site.domain }}/tags/{{ item.name }}" class="hover:text-blue-500 italic font-black">#{{ item.name }}</a>
+        {% else %}
+          <a href="{{ site.domain }}/tags/{{ item.name }}" class="hover:text-blue-500 italic">#{{ item.name }}</a>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+  <div class="grid grid-cols-none gap-4 md:grid-cols-2">
+    {% for post in posts %}
+      {% include "./modules/post-card.html" %}
+    {% endfor %}
+  </div>
+  {% if posts.length === 0 %}
+    <div class="py-2 flex items-center justify-center">
+      <span class="text-sm font-light">当前标签暂无文章</span>
+    </div>
+  {% endif %}
+  {% include "./modules/pagination.html" %}
+{% endblock %}

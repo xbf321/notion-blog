@@ -1,0 +1,23 @@
+{% from "./macro/text.nj" import text %}
+<!-- rows 为手动添加，包含 cells -->
+<div class="notion-block notion-table-block" data-block-id="{{ id }}">
+  <table>
+    <tbody>
+      {% for row in rows %}
+        <tr class="notion-table-row">
+          {% for cell in row.cells %}
+            <td>
+              <div class="notion-table-cell">
+                {% for item in cell %}
+                <div class="notion-table-cell-text">
+                  {{ text(item, helper) }}
+                </div>
+                {% endfor %}
+              </div>
+            </td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

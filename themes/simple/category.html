@@ -1,0 +1,16 @@
+{% extends "./modules/layout.html" %}
+
+{% block content %}
+  {% include "./modules/category-filter.html" %}
+  <div class="grid grid-cols-none gap-4 md:grid-cols-2">
+    {% for post in posts %}
+      {% include "./modules/post-card.html" %}
+    {% endfor %}
+  </div>
+  {% if posts.length === 0 %}
+    <div class="py-2 flex items-center justify-center">
+      <span class="text-sm font-light">当前类别暂无文章</span>
+    </div>
+  {% endif %}
+  {% include "./modules/pagination.html" %}
+{% endblock %}

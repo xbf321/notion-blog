@@ -1,0 +1,11 @@
+<div class="block">
+  <ul class="flex flex-wrap gap-2 mb-3">
+    {% for item in site.categories %}
+      {% if categoryName === item.name %}
+        <li><a class="text-center p-1 hover:text-blue-500 font-black" href="{{ site.domain }}/categories/{{ item.name }}" style="color: {{ helper.colorNameToCss(item.color) }};">{{ item.name }}</a></li>
+      {% else %}
+        <li><a class="text-center p-1 hover:text-blue-500" href="{{ site.domain }}/categories/{{ item.name }}" style="color: {{ helper.colorNameToCss(item.color) }};">{{ item.name }}</a></li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+</div>

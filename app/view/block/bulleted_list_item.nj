@@ -1,0 +1,9 @@
+{% from "./macro/text.nj" import text %}
+<div class="notion-block notion-bulleted_list-block" data-block-id="{{ id }}">
+  <div class="notion-bulleted_list-dot"></div>
+  <div class="notion-bulleted_list-text">
+      {% for item in rich_text %}
+        {{ text(item, helper) }}
+      {% endfor %}
+  </div>
+</div>

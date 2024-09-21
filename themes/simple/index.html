@@ -1,0 +1,16 @@
+{% extends "./modules/layout.html" %}
+
+{% block content %}
+  {% include "./modules/category-filter.html" %}
+  <div class="mb-3">
+    {% for post in posts %}
+      {% include "./modules/post-card.html" %}
+    {% endfor %}
+  </div>
+  {% if posts.length === 0 %}
+    <div class="mt-6 flex items-center justify-center">
+      <span class="text-sm font-light">当前没有文章</span>
+    </div>
+  {% endif %}
+  {% include "./modules/pagination.html" %}
+{% endblock %}

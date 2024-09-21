@@ -1,0 +1,20 @@
+{% from "./macro/text.nj" import text %}
+<div class="notion-block notion-image-block" data-block-id="{{ id }}">
+  <div class="notion-image-block-image_wrapper">
+    {% if type === 'external' %}
+      {% set imageUrl = external.url %}
+    {% elif type === 'file' %}
+      {% set imageUrl = file.url %}
+    {% else %}
+      {% set imageUrl = '' %}
+    {% endif %}
+    {% if imageUrl %}
+      <img loading="lazy" data-src="{{ imageUrl }}" src="data:image/gif;base64,R0lGODlhCAAIAJEAAOnp6eTk5O7m8AAAACH5BAEAAAIALAAAAAAIAAgAAAINjAMJh2q6DnxOVsqmLQA7"/>
+    {% endif %}
+  </div>
+  <div class="notion-image-block-caption">
+    {% for item in caption %}
+      {{ text(item, helper) }}
+    {% endfor %}
+  </div>
+</div>

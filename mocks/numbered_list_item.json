@@ -1,0 +1,45 @@
+{
+  "object": "block",
+  "id": "48c53d6d-912f-4e59-b9b1-23a01d0c67b9",
+  "parent": {
+      "type": "page_id",
+      "page_id": "09897ebb-c7c1-47c7-95cb-6d5361d58470"
+  },
+  "created_time": "2024-09-12T02:54:00.000Z",
+  "last_edited_time": "2024-09-12T02:54:00.000Z",
+  "created_by": {
+      "object": "user",
+      "id": "e59589f2-a905-4cc3-bfdd-e812a0ec679b"
+  },
+  "last_edited_by": {
+      "object": "user",
+      "id": "e59589f2-a905-4cc3-bfdd-e812a0ec679b"
+  },
+  "has_children": false,
+  "archived": false,
+  "in_trash": false,
+  "type": "numbered_list_item",
+  "numbered_list_item": {
+      "rich_text": [
+          {
+              "type": "text",
+              "text": {
+                  "content": "不成熟的看法",
+                  "link": null
+              },
+              "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+              },
+              "plain_text": "不成熟的看法",
+              "href": null
+          }
+      ],
+      "number": 1,
+      "color": "default"
+  }
+}

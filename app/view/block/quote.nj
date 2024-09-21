@@ -1,0 +1,10 @@
+{% from "./macro/text.nj" import text %}
+<div class="notion-block notion-quote-block" data-block-id="{{ id }}">
+  <blockquote>
+    <div class="notion-quote-container">
+      {% for item in rich_text %}
+        {{ text(item, helper) }}
+      {% endfor %}
+    </div>
+  </blockquote>
+</div>

@@ -1,0 +1,17 @@
+{% from "./macro/text.nj" import text %}
+<div class="notion-block notion-code-block" data-block-id="{{ id }}">
+  <div class="notion-code-block-wrapper">
+    <!-- <pre> -->
+      <code class="language-{{ language }}">
+        {% for item in rich_text %}
+          {{ text(item, helper) }}
+        {% endfor %}
+      </code>
+    <!-- </pre> -->
+  </div>
+  <div class="notion-code-block-caption">
+    {% for item in caption %}
+      {{ text(item, helper) }}
+    {% endfor %}
+  </div>
+</div>

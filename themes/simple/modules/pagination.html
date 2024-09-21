@@ -1,0 +1,18 @@
+{% if prevHref or nextHref %}
+  <div class="flex items-center justify-between">
+    <a
+      class="button"
+      href="{{ prevHref }}"
+    >
+      上一页
+    </a>
+    {% if hasMore %}
+      <a
+        class="button"
+        href="{{ nextHref }}"
+      >
+        下一页
+      </a>
+    {% endif %}
+  </div>
+{% endif %}

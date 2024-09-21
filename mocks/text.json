@@ -1,0 +1,43 @@
+{
+  "object": "block",
+  "id": "f11c5691-65ed-42a7-9c6a-b9e012792d0c",
+  "parent": {
+      "type": "page_id",
+      "page_id": "09897ebb-c7c1-47c7-95cb-6d5361d58470"
+  },
+  "created_time": "2024-09-12T02:54:00.000Z",
+  "last_edited_time": "2024-09-12T02:54:00.000Z",
+  "created_by": {
+      "object": "user",
+      "id": "e59589f2-a905-4cc3-bfdd-e812a0ec679b"
+  },
+  "last_edited_by": {
+      "object": "user",
+      "id": "e59589f2-a905-4cc3-bfdd-e812a0ec679b"
+  },
+  "has_children": false,
+  "archived": false,
+  "in_trash": false,
+  "type": "paragraph",
+  "paragraph": {
+      "rich_text": [
+          {
+              "type": "text",
+              "text": {
+                  "content": "于是我就在一次和郭老大的一对一沟通中提出了这个问题。郭老大在表达同情之后，邀请我参加了一次产品的讨论会。在产品讨论会中，我看到大家都非常努力地在讨论产品方案，从而了解到，产品同事也非常不容易，他们需要在非常有限的时间内做出完整的产品方案，所以难免出现小的调整。而对于创业公司来说，「按时交付」是第一优先级的事情，所以我在这之后，接受产品调整的心态上就好受了很多。",
+                  "link": null
+              },
+              "annotations": {
+                  "bold": false,
+                  "italic": false,
+                  "strikethrough": false,
+                  "underline": false,
+                  "code": false,
+                  "color": "default"
+              },
+              "plain_text": "于是我就在一次和郭老大的一对一沟通中提出了这个问题。郭老大在表达同情之后，邀请我参加了一次产品的讨论会。在产品讨论会中，我看到大家都非常努力地在讨论产品方案，从而了解到，产品同事也非常不容易，他们需要在非常有限的时间内做出完整的产品方案，所以难免出现小的调整。而对于创业公司来说，「按时交付」是第一优先级的事情，所以我在这之后，接受产品调整的心态上就好受了很多。",
+              "href": null
+          }
+      ],
+      "color": "default"
+  }

@@ -1,0 +1,3 @@
+<div class="notion-block notion-child_page-block" data-block-id="{{ id }}">
+  <a href="/archives/{{ id }}" target="__blank">{{ title }}</a>
+</div>

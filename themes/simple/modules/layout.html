@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ site.title }}</title>
+    <link rel="icon" href="{{ site.favicon }}" />
+    <meta property="og:title" content="{{ site.title }}" />
+    <meta property="og:description" content="{{ site.description }}">
+    <style>html {background-color: rgb(255, 255, 255);color: rgb(31, 35, 40); } .container {max-width: 800px !important; padding-right: 1rem; padding-left: 1rem;}</style>
+    <link crossorigin="anonymous" media="all" rel="stylesheet" href="{{ site.domain }}/combine/??public/styles/notion-block.css,public/styles/prism.css,themes/simple/assets/style.css?v=20240918" />
+    <script defer src="{{ site.domain }}/combine/??public/scripts/alpine.js,public/scripts/prism.js,public/scripts/lozad.js"></script>
+    {% block head %}{% endblock %}
+    {{ site.headCodeInjection }}
+  </head>
+  <body class="font-serif">
+    {% include "./header.html" %}
+    <div class="container mx-auto py-3 text-sm bg-white">
+      {% block content %}{% endblock %}
+      {% include "./footer.html" %}
+    </div>
+    {% block footer %}{% endblock %}
+    {{ site.footerCodeInjection }}
+  </body>
+  <script>
+    window.addEventListener("DOMContentLoaded", (event) => {
+      // lazy image
+      const images = document.querySelectorAll('img[loading="lazy"]');
+      const observer = lozad(images);
+      observer.observe();
+    });
+  </script>
+</html>

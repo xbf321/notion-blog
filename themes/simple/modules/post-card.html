@@ -1,0 +1,14 @@
+<article class="block border-b border-dashed pb-2 border-gray-200 mb-2">
+  <h2 class="text-lg font-bold">
+    <a href="{{ post.href }}" class="hover:text-blue-500">{{ post.title }}</a>
+  </h2>
+  <div class="text-gray-400 text-xs gap-3">
+    {% for name in post.categories %}
+      <a class="mr-2 hover:text-blue-500" href="{{ site.domain }}/categories/{{ name | escape }}">{{ name }}</a>
+    {% endfor %}
+  </div>
+  {% if post.summary %}
+    <div class="text-gray-600 mt-1">{{ post.summary }}</div>
+  {% endif %}
+  {% include "./tags.html" %}
+</article>

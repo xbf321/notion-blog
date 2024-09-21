@@ -1,0 +1,6 @@
+[demo]
+type = s3
+provider = Cloudflare
+access_key_id = key_id
+secret_access_key = access_key
+endpoint = endpoint

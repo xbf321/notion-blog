@@ -1,0 +1,23 @@
+{% extends "./modules/layout.html" %}
+{% block content %}
+  <h1 class="text-2xl font-bold">{{ post.title }}</h1>
+  <div class="pb-1 border-b border-gray-100 text-gray-400 flex gap-3">
+    {% if post.categories.length > 0 %}
+    <span>
+      {% for name in post.categories %}
+        <a class="hover:text-blue-500" href="{{ site.domain }}/categories/{{ name }}">{{ name }}</a>
+      {% endfor %}
+    </span>
+    {% endif %}
+    {% if post.publishDate %}
+      <span>{{ post.publishDate}}</span>
+    {% endif %}
+    {% if post.views %}
+      <span>{{ post.views }} 次浏览</span>
+    {% endif %}
+  </div>
+  <div class="my-2 notion-content">
+    {{ post.content | safe }}
+  </div>
+  {% include "./modules/tags.html" %}
+{% endblock %}

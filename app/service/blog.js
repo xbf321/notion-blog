@@ -1,4 +1,5 @@
 const _ = require('lodash');
+const moment = require('moment');
 const { withLeadingSlash } = require('ufo');
 const Service = require('egg').Service;
 
@@ -35,7 +36,7 @@ class BlogService extends Service {
 
   insertBlogDatabase(name, value) {
     const stmt = this.app.db.prepare('INSERT INTO blog(name, data, last_sync_time) VALUES(?, ?, ?) ON CONFLICT (name) DO UPDATE SET data = excluded.data, last_sync_time = excluded.last_sync_time');
-    stmt.run(name, JSON.stringify(value), new Date().toISOString());
+    stmt.run(name, JSON.stringify(value), moment().format('YYYY-MM-DD hh:mm:ss'));
   }
 
   getDataFromDatabaseByName(name) {

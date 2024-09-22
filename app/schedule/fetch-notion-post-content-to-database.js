@@ -6,6 +6,6 @@ module.exports = {
     env: [ 'prod' ],
   },
   async task(ctx) {
-    await ctx.service.blog.fetchNotionPostContentToDatabase();
+    await ctx.service.schedule.fetchNotionPostContentToDatabase();
   },
 };

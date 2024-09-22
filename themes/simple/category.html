@@ -2,7 +2,7 @@
 
 {% block content %}
   {% include "./modules/category-filter.html" %}
-  <div class="grid grid-cols-none gap-4 md:grid-cols-2">
+  <div class="mb-3">
     {% for post in posts %}
       {% include "./modules/post-card.html" %}
     {% endfor %}

@@ -1,7 +1,10 @@
 const RemoteErrorTransport = require('./app/lib/remote-error-transport');
 module.exports = async (app) => {
+  const ctx = app.createAnonymousContext();
   app.messenger.on('init_data', () => {
-    const ctx = app.createAnonymousContext();
+    if (app.config.env !== 'prod') {
+      return;
+    }
     // 某一个 worker 会运行下面逻辑
     app.logger.info('init_data');
     ctx.runInBackground(async () => {
@@ -10,9 +13,13 @@ module.exports = async (app) => {
       ctx.service.blog.initTableIfNotExists();
       // 2. 加载 siteInfo 数据到 DB
       await ctx.service.schedule.fetchNotionSiteInfoToDatabase();
-      // 3. 让所有 worker 更新 siteInfo 缓存 
+      // 3. 让所有 worker 更新 siteInfo 缓存
       await app.runSchedule('update-site-info-cache');
     });
+  });
+  // 3. 让所有 worker 更新 siteInfo 缓存 
+  ctx.runInBackground(async () => {
+    await app.runSchedule('update-site-info-cache');
   });
   app.logger.info('init app.js');
   // 在 app.js 中给 errorLogger 添加 transport，这样每条日志就会同时打印到这个 transport。

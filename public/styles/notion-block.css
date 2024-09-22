@@ -147,9 +147,19 @@
   background: rgb(247, 246, 243);
   min-width: 0px;
   width: 100%;
-  padding: 17px 8px 16px 16px;
-  min-height: 1em;
   color: rgb(55, 53, 47);
+  min-height: 1em;
+}
+.notion-code-block code {
+  white-space: nowrap;
+}
+
+.notion-code-block .notion-code-block-btn-copy {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 2px;
+  background-color: antiquewhite;
 }
 
 /* Toto */

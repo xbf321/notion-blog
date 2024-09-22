@@ -8,8 +8,8 @@
     <meta property="og:title" content="{{ site.title }}" />
     <meta property="og:description" content="{{ site.description }}">
     <style>html {background-color: rgb(255, 255, 255);color: rgb(31, 35, 40); } .container {max-width: 800px !important; padding-right: 1rem; padding-left: 1rem;} [x-cloak] { display: none !important; }</style>
-    <link crossorigin="anonymous" media="all" rel="stylesheet" href="/combine/??public/styles/notion-block.css,public/styles/prism.css,themes/simple/assets/style.css?v=20240918" />
-    <script crossorigin="anonymous" src="/combine/??public/scripts/jquery-3.7.1.min.js,public/scripts/prism.js,public/scripts/lozad.js"></script>
+    <link crossorigin="anonymous" media="all" rel="stylesheet" href="/combine/??public/styles/prism.css,themes/simple/assets/style.css,public/styles/notion-block.css?v=49485733" />
+    <script crossorigin="anonymous" src="/combine/??public/scripts/jquery-3.7.1.min.js,public/scripts/prism.js,public/scripts/clipboard.min.js,public/scripts/lozad.js"></script>
     {% block head %}{% endblock %}
     {{ site.headCodeInjection | safe }}
   </head>
@@ -30,8 +30,7 @@
         $('#btn-mobile-close').click(function() {
           mobileNavObj.hide();
         });
-      });
-      window.addEventListener("DOMContentLoaded", (event) => {
+        new ClipboardJS('.btn-clipboard');
         // lazy image
         const images = document.querySelectorAll('img[loading="lazy"]');
         const observer = lozad(images);

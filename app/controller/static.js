@@ -47,7 +47,9 @@ class StaticController extends Controller {
     const isCSS = pathname.indexOf('.css') > 0;
     const contentType = isCSS ? 'text/css' : 'application/javascript';
 
-    let fileContent = app.cache.combineFile[normalURL];
+    const useCache = app.env === 'prod';
+
+    let fileContent = useCache ? app.cache.combineFile[normalURL] : undefined;
     if (!fileContent) {
       fileContent = await this.readAssetsFiles(fileNames, isCSS);
       app.cache.combineFile[normalURL] = fileContent;

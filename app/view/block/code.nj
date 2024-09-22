@@ -1,13 +1,14 @@
 {% from "./macro/text.nj" import text %}
 <div class="notion-block notion-code-block" data-block-id="{{ id }}">
   <div class="notion-code-block-wrapper">
-    <!-- <pre> -->
-      <code class="language-{{ language }}">
+    <pre class="language-{{ language }}">
+      <code class="language-{{ language }}" id="clipboard_code_{{ id }}">
         {% for item in rich_text %}
           {{ text(item, helper) }}
         {% endfor %}
       </code>
-    <!-- </pre> -->
+    </pre>
+    <button class="notion-code-block-btn-copy btn-clipboard" data-clipboard-target="#clipboard_code_{{ id }}">复制</button>
   </div>
   <div class="notion-code-block-caption">
     {% for item in caption %}

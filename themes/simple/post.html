@@ -1,4 +1,12 @@
 {% extends "./modules/layout.html" %}
+
+{% block head %}
+<meta property="title" content="{{ post.title }} - {{ site.title }}" />
+<meta name="description" content="{{ site.summary }}"/>
+<meta property="og:title" content="{{ post.title }} - {{ site.title }}" />
+<meta property="og:description" content="{{ site.summary }}">
+{% endblock %}
+
 {% block content %}
   <h1 class="text-2xl font-bold">{{ post.title }}</h1>
   <div class="pb-1 border-b border-gray-100 text-gray-400 flex gap-3">
@@ -20,4 +28,5 @@
     {{ post.content | safe }}
   </div>
   {% include "./modules/tags.html" %}
+  {% include "./modules/comment.html" %}
 {% endblock %}

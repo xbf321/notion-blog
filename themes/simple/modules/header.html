@@ -8,11 +8,15 @@
             <img src="{{ site.icon }}" alt="Logo" class="h-full w-auto" />
           </div>
       </div>
-      <div id="site-title"><a href="/">{{ site.title }}</a></div>
+      <div id="site-title"><i class="fa-solid fa-house-chimney mr-2"></i><a href="/">{{ site.title }}</a></div>
       <div class="hidden md:block">
         <ul class="flex gap-3">
           {% for item in site.menus %}
-            <li><a href="{{item.slug}}" target="{{ item.target }}" class="hover:text-blue-500">{{ item.title }}</a></li>
+            <li><a href="{{item.slug}}" target="{{ item.target }}" class="hover:text-blue-500">{{ item.title }}</a>
+              {% if item.target %}
+                <i class="text-sm fa-solid fa-arrow-up-right-from-square"></i>
+              {% endif %}
+            </li>
           {% endfor %}
         </ul>
       </div>
@@ -50,6 +54,9 @@
               target="{{ item.target }}"
             >
               {{ item.title }}
+              {% if item.target %}
+                <i class="text-sm fa-solid fa-arrow-up-right-from-square"></i>
+              {% endif %}
             </a>
           </li>
         {% endfor %}

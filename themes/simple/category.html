@@ -1,5 +1,10 @@
 {% extends "./modules/layout.html" %}
 
+{% block head %}
+<meta property="title" content="{{ categoryName }} - {{ site.title }}" />
+<meta property="og:title" content="{{ categoryName }} - {{ site.title }}" />
+{% endblock %}
+
 {% block content %}
   {% include "./modules/category-filter.html" %}
   <div class="mb-3">

@@ -29,6 +29,12 @@
 
 项目涉及到使用 **[rclone](https://rclone.org/)**，建议在 Docker 部署。如果您的环境已经安装 rclone ，可以不通过 Docker 部署。
 
+字体图标使用[FontAwesome](https://fontawesome.com/)，图标查询，参见：[https://fontawesome.com/search?o=r&m=free](https://fontawesome.com/search?o=r&m=free)
+
+站点评论使用[twikoo](twikoo)。私有化部署在 Docker 中。
+
+> 这里没有使用类 git discussion 评论系统。原因是这类系统，都需要事前登录，而评论用户有时很讨厌登录，所以就放弃了。
+
 ## 使用技术
 
 * Eggjs
@@ -36,6 +42,8 @@
 * notion-js-sdk
 * lodash
 * rclone
+* FontAwesome
+* Twikoo
 
 ## Docker 部署
 
@@ -184,7 +192,7 @@ this.options.app.curl(logCenterServer, {
 
 使用 **SQLite** 可视化工具，如 SQLiteStudio ，创建 **blog** 表。执行下面SQL：
 
-```
+```shell
 CREATE TABLE blog (
   name TEXT PRIMARY KEY NOT NULL,
   data TEXT NOT NULL DEFAULT (''),
@@ -193,6 +201,19 @@ CREATE TABLE blog (
 ```
 
 线上环境不用这一步，会自动检测 blog 是否存在。
+
+### 在 config 目录中，新建 config.local.js，内容如下
+
+```js
+module.exports = () => {
+  return {
+    notionAppKey: 'key',
+    notionDatabaseId: 'id',
+    // 本地开发，尽量留空
+    siteDomain: '',
+  };
+};
+```
 
 ### 开始运行
 

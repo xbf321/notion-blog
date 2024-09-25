@@ -16,6 +16,10 @@ class StaticController extends Controller {
     let content = null;
     try {
       content = await this.readFile(fileName);
+      if (!content) {
+        // 实时生成
+        content = await ctx.service.schedule.buildSitemapXMLFile();
+      }
     } catch (err) {
       ctx.logger.error(err);
     }
@@ -25,14 +29,9 @@ class StaticController extends Controller {
 
   async robotsTXT() {
     const { ctx, app } = this;
-    const fileName = `${app.baseDir}/robots.txt`;
-    let content = null;
-    try {
-      content = await this.readFile(fileName);
-    } catch (err) {
-      ctx.logger.error(err);
-    }
-    ctx.body = content || '';
+    const { siteInfo } = app.cache;
+    const content = siteInfo.robotsTXT || '';
+    ctx.body = content;
   }
 
   // 合并 js/css 减少网络请求

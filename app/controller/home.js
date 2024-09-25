@@ -85,6 +85,11 @@ class HomeController extends BaseController {
   async post() {
     const { pageId } = this.ctx.params;
     const post = await this.ctx.service.blog.getPostByPageId(pageId);
+    if (!post.id) {
+      this.ctx.status === 404;
+      this.ctx.bogy = null;
+      return;
+    }
     this.setPostViewsCache(pageId);
     await this.renderView('post', {
       post,

@@ -1,6 +1,8 @@
 const _ = require('lodash');
 const fs = require('fs-extra');
 const shell = require('shelljs');
+const { cleanDoubleSlashes } = require('ufo');
+
 const Service = require('egg').Service;
 
 class ScheduleService extends Service {
@@ -151,8 +153,9 @@ class ScheduleService extends Service {
       try {
         json = JSON.parse(data);
         const { href } = json;
+        const loc = cleanDoubleSlashes(`${siteInfo.domain}/${href}`);
         result.push('<url>');
-        result.push(`<loc>${siteInfo.domain}/${href}</loc>`);
+        result.push(`<loc>${loc}</loc>`);
         result.push('</url>');
       } catch (err) {
         this.ctx.logger.error(err);
@@ -161,14 +164,6 @@ class ScheduleService extends Service {
     result.push('</urlset>');
     const content = result.join('');
     fs.outputFileSync(`${this.app.baseDir}/sitemap.xml`, content);
-    return content;
-  }
-
-  async buildRotbotsTXTFile() {
-    this.logger.info('service.schedule -> buildRotbotsTXTFile');
-    const { siteInfo } = this.app.cache;
-    const content = siteInfo.robotsTXT || '';
-    fs.outputFileSync(`${this.app.baseDir}/robots.txt`, content);
     return content;
   }
 

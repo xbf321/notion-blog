@@ -1,9 +1,10 @@
 {% extends "./modules/layout.html" %}
 
-{% block head %}
-<meta property="title" content="{{ tagName }} - {{ site.title }}" />
-<meta property="og:title" content="{{ tagName }} - {{ site.title }}" />
-{% endblock %}
+{% block head -%}
+  <title>{{ tagName }} - {{ site.title }}</title>
+  <meta property="title" content="{{ tagName }} - {{ site.title }}" />
+  <meta property="og:title" content="{{ tagName }} - {{ site.title }}" />
+{%- endblock %}
 
 {% block content %}
   <h1 class="border-b pb-1">所有标签</h1>

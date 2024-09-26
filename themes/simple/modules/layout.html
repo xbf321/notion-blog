@@ -3,17 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% block head -%}
     <title>{{ site.title }}</title>
-    <link rel="icon" href="{{ site.favicon }}" />
-    <style>html {background-color: rgb(255, 255, 255);color: rgb(31, 35, 40); } .container {max-width: 800px !important; padding-right: 1rem; padding-left: 1rem;} [x-cloak] { display: none !important; }</style>
-    <link crossorigin="anonymous" media="all" rel="stylesheet" href="/combine/??public/styles/fontawesome.min.css,public/styles/fontawesome-solid.min.css,public/styles/fontawesome-regular.min.css,themes/simple/assets/style.css,public/styles/notion-block.css?v=49485733" />
-    <script crossorigin="anonymous" src="/combine/??public/scripts/jquery-3.7.1.min.js,public/scripts/clipboard.min.js,public/scripts/lozad.js "></script>
-    {% block head %}
     <meta property="title" content="{{ site.title }}" />
     <meta property="description" content="{{ site.description }}">
     <meta property="og:title" content="{{ site.title }}" />
     <meta property="og:description" content="{{ site.description }}">
-    {% endblock %}
+    {%- endblock %}
+    <link rel="icon" href="{{ site.favicon }}" />
+    <style>html {background-color: rgb(255, 255, 255);color: rgb(31, 35, 40); } .container {max-width: 800px !important; padding-right: 1rem; padding-left: 1rem;} [x-cloak] { display: none !important; }</style>
+    <link crossorigin="anonymous" media="all" rel="stylesheet" href="/combine/??public/styles/fontawesome.min.css,public/styles/fontawesome-solid.min.css,public/styles/fontawesome-regular.min.css,themes/simple/assets/style.css,public/styles/notion-block.css?v=49485733" />
+    <script crossorigin="anonymous" src="/combine/??public/scripts/jquery-3.7.1.min.js,public/scripts/clipboard.min.js,public/scripts/lozad.js "></script>
     {{ site.headCodeInjection | safe }}
   </head>
   <body class="font-serif">

@@ -152,6 +152,7 @@
 }
 .notion-code-block pre {
   padding: 1em;
+  overflow: scroll;
 }
 
 .notion-code-block .notion-code-block-btn-copy {

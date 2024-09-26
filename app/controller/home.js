@@ -38,12 +38,18 @@ class BaseController extends Controller {
       nextHref,
     };
   }
+
+  render404() {
+    this.ctx.status === 404;
+    this.ctx.bogy = null;
+    return;
+  }
 }
 
 class HomeController extends BaseController {
   async index() {
     const { pageIndex = 1 } = this.ctx.params;
-    const { results: posts, hasMore } = await this.ctx.service.blog.listPosts(pageIndex);
+    const { results: posts, hasMore, totalPage } = await this.ctx.service.blog.listPosts(pageIndex);
     const { prevHref, nextHref } = this.buildPagination('', pageIndex, hasMore);
 
     await this.renderView('index', {
@@ -51,12 +57,14 @@ class HomeController extends BaseController {
       prevHref,
       nextHref,
       hasMore,
+      totalPage,
+      pageIndex,
     });
   }
 
   async categories() {
     const { slug, pageIndex = 1 } = this.ctx.params;
-    const { results: posts, hasMore } = await this.ctx.service.blog.listPostsByCategoryName(slug);
+    const { results: posts, hasMore, totalPage } = await this.ctx.service.blog.listPostsByCategoryName(slug);
     const { prevHref, nextHref } = this.buildPagination(`/categories/${slug}`, pageIndex, hasMore);
 
     await this.renderView('category', {
@@ -65,12 +73,14 @@ class HomeController extends BaseController {
       prevHref,
       nextHref,
       hasMore,
+      totalPage,
+      pageIndex,
     });
   }
 
   async tags() {
     const { slug, pageIndex = 1 } = this.ctx.params;
-    const { results: posts, hasMore } = await this.ctx.service.blog.listPostsByTagName(slug);
+    const { results: posts, hasMore, totalPage } = await this.ctx.service.blog.listPostsByTagName(slug);
     const { prevHref, nextHref } = this.buildPagination(`/tags/${slug}`, pageIndex, hasMore);
 
     await this.renderView('tag', {
@@ -79,16 +89,16 @@ class HomeController extends BaseController {
       prevHref,
       nextHref,
       hasMore,
+      totalPage,
+      pageIndex,
     });
   }
 
   async post() {
     const { pageId } = this.ctx.params;
     const post = await this.ctx.service.blog.getPostByPageId(pageId);
-    if (!post.id) {
-      this.ctx.status === 404;
-      this.ctx.bogy = null;
-      return;
+    if (!post) {
+      this.render404();
     }
     this.setPostViewsCache(pageId);
     await this.renderView('post', {
@@ -100,13 +110,14 @@ class HomeController extends BaseController {
     const { slug } = this.ctx.params;
     const pageId = await this.ctx.service.blog.getPageIdBySlugInPageProperty(slug);
     if (!pageId) {
-      this.ctx.status === 404;
-      this.ctx.bogy = null;
-      return;
+      this.render404();
     }
 
-    this.setPostViewsCache(pageId);
     const post = await this.ctx.service.blog.getPostByPageId(pageId, true);
+    if (!post) {
+      this.render404();
+    }
+    this.setPostViewsCache(pageId);
     await this.renderView('page', {
       post,
     });

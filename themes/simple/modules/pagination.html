@@ -6,13 +6,12 @@
     >
       上一页
     </a>
-    {% if hasMore %}
-      <a
-        class="button"
-        href="{{ nextHref }}"
-      >
-        下一页
-      </a>
-    {% endif %}
+    <span>{{ pageIndex }} / {{ totalPage }}</span>
+    <a
+      class="button"
+      href="{{ nextHref }}"
+    >
+      下一页
+    </a>
   </div>
 {% endif %}

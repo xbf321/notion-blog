@@ -4,8 +4,9 @@
     {{ number }}.
   </div>
   <div class="notion-numbered_list-text">
-    {% for item in rich_text %}
+    {%- for item in rich_text -%}
       {{ text(item, helper) }}
-    {% endfor %}
+    {%- endfor -%}
+    <!--children-->
   </div>
 </div>

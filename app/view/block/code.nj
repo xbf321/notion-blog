@@ -3,16 +3,16 @@
   <div class="notion-code-block-wrapper">
     <pre class="language-{{ language }}">
       <code class="language-{{ language }}" id="clipboard_code_{{ id }}">
-        {% for item in rich_text %}
+        {%- for item in rich_text -%}
           {{ text(item, helper) }}
-        {% endfor %}
+        {%- endfor -%}
       </code>
     </pre>
     <button class="notion-code-block-btn-copy btn-clipboard" data-clipboard-target="#clipboard_code_{{ id }}">复制</button>
   </div>
   <div class="notion-code-block-caption">
-    {% for item in caption %}
+    {%- for item in caption -%}
       {{ text(item, helper) }}
-    {% endfor %}
+    {%- endfor -%}
   </div>
 </div>

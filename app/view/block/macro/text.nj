@@ -1,18 +1,18 @@
-{% macro text(textTypeObject, helper) %}
+{% macro text(textTypeObject, helper) -%}
   {% set item = textTypeObject %}
-  {% if item.type === 'equation' %}
+  {% if item.type === 'equation' -%}
     {{ item.plain_text }}
-  {% else %}
+  {%- else -%}
     {% if item.text.link %}
     <a href="{{ item.text.link.url }}" target="__blank" style="{{ helper.annotationsToCss(item.annotations) }}">
       <span class="link-annotation">{{ item.text.content | replace("\n", "<br />") | safe }}</span>
     </a>
-    {% else %}
-      {% if helper.annotationsToCss(item.annotations) %}
+    {%- else -%}
+      {%- if helper.annotationsToCss(item.annotations) -%}
         <span style="{{ helper.annotationsToCss(item.annotations) }}">{{ item.text.content | replace("\n", "<br />") | safe }}</span>
-      {% else %}
+      {%- else -%}
         {{ item.text.content | replace("\n", "<br />") | safe }}
-      {% endif %}
-    {% endif %}
-  {% endif %}
-{% endmacro %}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endmacro %}

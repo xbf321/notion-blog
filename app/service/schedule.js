@@ -61,7 +61,7 @@ class ScheduleService extends Service {
       // 格式：post-property/09897ebb-c7c1-47c7-95cb-6d5361d58470
       const [ , id ] = dbData[i].name.split('/');
       if (id) {
-        await this.ctx.service.blog.realtimeFetchNotionPostContentToDatabaseByPostId(id);
+        await this.ctx.service.blog.realtimeFetchNotionPageContentToDatabaseByPostId(id);
       }
     }
   }
@@ -170,18 +170,30 @@ class ScheduleService extends Service {
   // 更新页面浏览数
   async updatePostViewsToNotion() {
     this.logger.info('service.schedule -> updatePostViewsToNotion');
-    const { ctx, app } = this;
+    const { ctx, app, config } = this;
     const { postViews } = app.cache;
+    const { POST_CONTENT } = config.dbNameKeys;
     // 这块有个细微的BUG
     // 如果在更新 Views 时间过长，这时又频繁请求 Post
     // 在这个时间差内，缓存中的 views 是不可用的，会丢弃
     // 不过因为是 views 不是重要数据，可以接受
     for (const item of Object.entries(postViews)) {
       const [ pageId, viewCount ] = item;
+      // 检查 pageId 是否存在
+      const isExsits = ctx.service.blog.getDataFromDatabaseByName(`${POST_CONTENT}/${pageId}`);
+      if (!isExsits) {
+        delete this.app.cache.postViews[pageId];
+        continue;
+      }
       // 需要实时获取 post views
       // 在这个基础上累加
       // 因为 DB 中的数据也不是实时获取
-      const { views: baseViews } = await ctx.service.notion.retrievePagePropertiesByPageId(pageId);
+      const properties = await ctx.service.notion.retrievePagePropertiesByPageId(pageId);
+      if (!properties) {
+        delete this.app.cache.postViews[pageId];
+        continue;
+      }
+      const { views: baseViews } = properties;
       const totalViews = (baseViews || 0) + (viewCount || 1);
       await ctx.service.blog.updatePostViewsByPageId(pageId, totalViews);
       delete this.app.cache.postViews[pageId];

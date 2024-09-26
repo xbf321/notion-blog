@@ -3,21 +3,21 @@
 <div class="notion-block notion-table-block" data-block-id="{{ id }}">
   <table>
     <tbody>
-      {% for row in rows %}
+      {%- for row in children -%}
         <tr class="notion-table-row">
-          {% for cell in row.cells %}
+          {%- for cell in row.table_row.cells -%}
             <td>
               <div class="notion-table-cell">
-                {% for item in cell %}
+                {%- for item in cell -%}
                 <div class="notion-table-cell-text">
                   {{ text(item, helper) }}
                 </div>
-                {% endfor %}
+                {%- endfor -%}
               </div>
             </td>
-          {% endfor %}
+          {%- endfor -%}
         </tr>
-      {% endfor %}
+      {%- endfor -%}
     </tbody>
   </table>
 </div>

@@ -55,11 +55,26 @@ class BlogService extends Service {
     this.app.db.prepare('DELETE FROM blog WHERE name = ?').run(name);
   }
 
+  async realtimeFetchNotionPagePropertyToDatabaseByPostId(pageId) {
+    const { POST_PROPERTY, PAGE_PROPERTY } = this.DB_NAME_KEYS;
+    const properties = await this.ctx.service.notion.retrievePagePropertiesByPageId(pageId);
+    if (!properties) {
+      return null;
+    }
+    const { id, type } = properties;
+    const dbNameKey = type === 'Page' ? PAGE_PROPERTY : POST_PROPERTY;
+    this.ctx.service.blog.insertBlogDatabase(`${dbNameKey}/${id}`, properties);
+
+    return properties;
+  }
   // 实时获取 Post content blocks
   // 且如果图片是 Notion 上传，非自建图床，需要下载到本地，然后同步到图床
-  async realtimeFetchNotionPostContentToDatabaseByPostId(pageId) {
+  async realtimeFetchNotionPageContentToDatabaseByPostId(pageId) {
     const { POST_CONTENT } = this.DB_NAME_KEYS;
     const blocks = await this.ctx.service.notion.retrieveBlockChildren(pageId);
+    if (!blocks || blocks.length === 0) {
+      return [];
+    }
     this.insertBlogDatabase(`${POST_CONTENT}/${pageId}`, blocks);
     this.retrieveImageBlocksToDatabase(blocks);
     return blocks;
@@ -133,6 +148,7 @@ class BlogService extends Service {
     const data = {
       results: [],
       hasMore,
+      totalPage: Math.ceil(total / pageSize),
     };
 
     const stmt = this.app.db.prepare(`
@@ -176,52 +192,60 @@ class BlogService extends Service {
     return id || '';
   }
 
+  async blockToHtml(block) {
+    const { ctx } = this;
+    const { id, type, has_children } = block;
+    const data = {
+      id,
+      ...block[type],
+    };
+    let html = '';
+    switch (type) {
+      case 'heading_1':
+        html = await ctx.helper.renderTemplateView('h2', data);
+        break;
+      case 'heading_2':
+        html = await ctx.helper.renderTemplateView('h3', data);
+        break;
+      case 'heading_3':
+        html = await ctx.helper.renderTemplateView('h4', data);
+        break;
+      case 'paragraph':
+      case 'quote':
+      case 'numbered_list_item':
+      case 'bulleted_list_item':
+      case 'divider':
+      case 'code':
+      case 'image':
+      case 'to_do':
+      case 'table':
+      case 'child_page':
+        html = await ctx.helper.renderTemplateView(type, data);
+        break;
+      default:
+    }
+
+    if (has_children) {
+      const { children } = block[type];
+      const childHTML = await this.formatBlocksToHtml(children);
+      html = html.replace(/<!--children--\>/ig, childHTML);
+    }
+    // 去掉不必要的注释
+    html = html.replace(/<!--children--\>/ig, '');
+    return html;
+  }
+
   // https://developers.notion.com/reference/rich-text#text
   // blocks 数据格式为 HTML
   async formatBlocksToHtml(blocks = []) {
-    const { ctx } = this;
     const htmlResult = [];
     if (!blocks || blocks.length === 0) {
       return '';
     }
     for (let i = 0; i < blocks.length; i++) {
       const block = blocks[i];
-      const { id, type } = block;
-      const data = {
-        id,
-        ...block[type],
-      };
-      let html = '';
-      switch (type) {
-        case 'heading_1':
-          html = await ctx.helper.renderTemplateView('h2', data);
-          break;
-        case 'heading_2':
-          html = await ctx.helper.renderTemplateView('h3', data);
-          break;
-        case 'heading_3':
-          html = await ctx.helper.renderTemplateView('h4', data);
-          break;
-        case 'paragraph':
-        case 'quote':
-        case 'numbered_list_item':
-        case 'bulleted_list_item':
-        case 'divider':
-        case 'code':
-        case 'image':
-        case 'to_do':
-        case 'table':
-        case 'child_page':
-          html = await ctx.helper.renderTemplateView(type, data);
-          break;
-        default:
-      }
-      if (type === 'image') {
-        console.info(data);
-      }
-      if (html) {
-        htmlResult.push(html);
-      }
+      const html = await this.blockToHtml(block);
+      htmlResult.push(html);
     }
     return htmlResult.join('');
   }
@@ -236,8 +260,21 @@ class BlogService extends Service {
   // 所以为了 slug 区分了 page-property 和 post-property
   async getPostByPageId(pageId, isPage = false) {
     const { PAGE_PROPERTY, POST_PROPERTY, POST_CONTENT } = this.DB_NAME_KEYS;
-    const properties = this.getDataFromDatabaseByName(`${isPage === true ? PAGE_PROPERTY : POST_PROPERTY}/${pageId}`);
-    const blocks = this.getDataFromDatabaseByName(`${POST_CONTENT}/${pageId}`) || [];
+    let properties = this.getDataFromDatabaseByName(`${isPage === true ? PAGE_PROPERTY : POST_PROPERTY}/${pageId}`);
+    if (!properties) {
+      // 实时请求 Notion 获得数据
+      properties = await this.realtimeFetchNotionPagePropertyToDatabaseByPostId(pageId);
+    }
+    // 还不存在，真当不存在
+    if (!properties) {
+      return null;
+    }
+    let blocks = this.getDataFromDatabaseByName(`${POST_CONTENT}/${pageId}`);
+    // 当 properties 存在，content 不存在时
+    // 实时请求 Notion 获得数据
+    if (!blocks) {
+      blocks = await this.realtimeFetchNotionPageContentToDatabaseByPostId(pageId);
+    }
     const htmlContent = await this.formatBlocksToHtml(blocks);
 
     const postInfo = {

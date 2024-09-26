@@ -140,18 +140,18 @@
 
 /* Code */
 .notion-code-block .notion-code-block-wrapper {
+  background: rgb(247, 246, 243);
   flex-grow: 1;
   border-radius: 4px;
   text-align: left;
   position: relative;
-  background: rgb(247, 246, 243);
   min-width: 0px;
   width: 100%;
   color: rgb(55, 53, 47);
   min-height: 1em;
 }
-.notion-code-block code {
-  white-space: nowrap;
+.notion-code-block pre {
+  padding: 1em;
 }
 
 .notion-code-block .notion-code-block-btn-copy {

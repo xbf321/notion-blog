@@ -1,6 +1,6 @@
 {% from "./macro/text.nj" import text %}
 <div class="notion-block notion-text-block" data-block-id="{{ id }}">
-  {% for item in rich_text %}
+  {%- for item in rich_text -%}
     {{ text(item, helper) }}
-  {% endfor %}
+  {%- endfor -%}
 </div>

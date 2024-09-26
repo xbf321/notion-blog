@@ -1,7 +1,7 @@
 module.exports = {
   schedule: {
     // 间隔
-    interval: '1h',
+    interval: '1.5h',
     type: 'worker',
     env: [ 'prod' ],
   },

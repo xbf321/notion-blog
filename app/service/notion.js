@@ -259,20 +259,10 @@ class NotionService extends Service {
     }
     for (let i = 0; i < blocks.length; i++) {
       const block = blocks[i];
-      const { id, type } = block;
-      // 处理 Table
-      if (type === 'table') {
-        block.table.rows = [];
-        const tableRowBlocks = await this.retrieveBlockChildren(id);
-        _.each(tableRowBlocks, tableRowBlock => {
-          const { id: tableRowId, table_row: tableRow } = tableRowBlock;
-          if (tableRow) {
-            block.table.rows.push({
-              id: tableRowId,
-              cells: tableRow.cells || [],
-            });
-          }
-        });
+      const { id, has_children, type } = block;
+      if (has_children) {
+        const children = await this.retrieveBlockChildren(id);
+        block[type].children = children;
       }
     }
     this.modifyNumberedListObject(blocks);
@@ -297,13 +287,14 @@ class NotionService extends Service {
     const response = await this.app.notion.pages.retrieve({ page_id: pageId });
     const postInfo = {};
     if (!response || !response.properties) {
-      return postInfo;
+      return null;
     }
-
+    postInfo.id = response.id;
     _.each(response.properties, (value, key) => {
       if (POST_PROPERTY_RULE[key]) {
         postInfo[key] = POST_PROPERTY_RULE[key](value);
       }
+      postInfo.href = postInfo.slug ? postInfo.slug : `/archives/${postInfo.id}`;
     });
     return postInfo;
   }

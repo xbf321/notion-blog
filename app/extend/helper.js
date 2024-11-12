@@ -26,7 +26,7 @@ module.exports = {
 
   annotationsToCss(annotations) {
     const styleMap = {
-      bold: 'font-weight: 600',
+      bold: 'font-weight: 800',
       italic: 'font-style: italic',
       underline: 'border-bottom: 0.05em solid',
       strikethrough: 'text-decoration:line-through',

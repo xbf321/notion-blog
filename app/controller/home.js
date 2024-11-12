@@ -99,6 +99,7 @@ class HomeController extends BaseController {
     const post = await this.ctx.service.blog.getPostByPageId(pageId);
     if (!post) {
       this.render404();
+      return;
     }
     this.setPostViewsCache(pageId);
     await this.renderView('post', {
@@ -111,11 +112,13 @@ class HomeController extends BaseController {
     const pageId = await this.ctx.service.blog.getPageIdBySlugInPageProperty(slug);
     if (!pageId) {
       this.render404();
+      return;
     }
 
     const post = await this.ctx.service.blog.getPostByPageId(pageId, true);
     if (!post) {
       this.render404();
+      return;
     }
     this.setPostViewsCache(pageId);
     await this.renderView('page', {

@@ -251,7 +251,7 @@ class NotionService extends Service {
   // A page ID can be passed as a block ID: https://developers.notion.com/docs/working-with-page-content#modeling-content-as-blocks
   async retrieveBlockChildren(blockId) {
     this.ctx.logger.info('service.notion -> retrieveBlockChildren');
-    const { results: blocks } = await this.app.notion.blocks.children.list({
+    const { results: blocks = [] } = await this.app.notion.blocks.children.list({
       block_id: blockId,
     });
     if (blocks.length === 0) {

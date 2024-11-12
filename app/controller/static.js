@@ -46,7 +46,7 @@ class StaticController extends Controller {
     const isCSS = pathname.indexOf('.css') > 0;
     const contentType = isCSS ? 'text/css' : 'application/javascript';
 
-    const useCache = app.env === 'prod';
+    const useCache = app.config.env === 'prod';
 
     let fileContent = useCache ? app.cache.combineFile[normalURL] : undefined;
     if (!fileContent) {

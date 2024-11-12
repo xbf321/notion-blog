@@ -57,7 +57,15 @@ class BlogService extends Service {
 
   async realtimeFetchNotionPagePropertyToDatabaseByPostId(pageId) {
     const { POST_PROPERTY, PAGE_PROPERTY } = this.DB_NAME_KEYS;
-    const properties = await this.ctx.service.notion.retrievePagePropertiesByPageId(pageId);
+    let properties = null;
+    try {
+      properties = await this.ctx.service.notion.retrievePagePropertiesByPageId(pageId);
+    } catch (ex) {
+      this.ctx.logger.error(ex);
+      properties = null;
+      this.deleteDatabaseRowByName(`${POST_PROPERTY}/${pageId}`);
+      this.deleteDatabaseRowByName(`${PAGE_PROPERTY}/${pageId}`);
+    }
     if (!properties) {
       return null;
     }
@@ -71,8 +79,18 @@ class BlogService extends Service {
   // 且如果图片是 Notion 上传，非自建图床，需要下载到本地，然后同步到图床
   async realtimeFetchNotionPageContentToDatabaseByPostId(pageId) {
     const { POST_CONTENT } = this.DB_NAME_KEYS;
-    const blocks = await this.ctx.service.notion.retrieveBlockChildren(pageId);
-    if (!blocks || blocks.length === 0) {
+    let blocks = [];
+    try {
+      blocks = await this.ctx.service.notion.retrieveBlockChildren(pageId);
+    } catch (ex) {
+      this.ctx.logger.error(ex);
+      blocks = [];
+      // 为什么出现这种情况？
+      // 在 Notion 中已经删除，但本地数据还有数据
+      // 解决方案是，出现这种情况，删除本地数据
+      this.deleteDatabaseRowByName(`${POST_CONTENT}/${pageId}`);
+    }
+    if (blocks.length === 0) {
       return [];
     }
     this.insertBlogDatabase(`${POST_CONTENT}/${pageId}`, blocks);

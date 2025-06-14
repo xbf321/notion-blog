@@ -29,6 +29,12 @@ module.exports = appInfo => {
     defaultExtension: '.html',
   };
 
+  config.security = {
+    csrf: {
+      ignore: '/schedule-manual',
+    },
+  };
+
   // add your middleware config here
   config.middleware = [ 'notfoundHandler' ];
 

@@ -40,13 +40,13 @@ class BlogService extends Service {
   }
 
   getDataFromDatabaseByName(name) {
-    const { data } = this.app.db.prepare('SELECT data FROM blog WHERE name = ?').get(name) || {};
+    const { data = '{}' } = this.app.db.prepare('SELECT data FROM blog WHERE name = ?').get(name) || {};
     let json = null;
     try {
-      json = JSON.parse(data || '');
+      json = JSON.parse(data);
     } catch (err) {
       json = null;
-      this.ctx.logger.error(`JSON parse error. name: ${name}`);
+      this.ctx.logger.error(`JSON parse error. name: ${name}`, err);
     }
     return json;
   }

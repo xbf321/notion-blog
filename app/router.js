@@ -4,8 +4,15 @@
 module.exports = app => {
   // 一定要注意路由顺序
   const { router, controller } = app;
-  // Test
-  router.get('/test', controller.test.index);
+
+  // schedule-manual
+  router.get('/schedule-manual/init', controller.scheduleManual.init);
+  router.get('/schedule-manual/siteInfo', controller.scheduleManual.siteInfo);
+  router.post('/schedule-manual/siteInfo', controller.scheduleManual.siteInfo);
+  router.get('/schedule-manual/buildSitemapXML', controller.scheduleManual.buildSitemapXML);
+  router.get('/schedule-manual/listPosts', controller.scheduleManual.listPosts);
+  router.post('/schedule-manual/listPosts', controller.scheduleManual.listPosts);
+  router.post('/schedule-manual/listPostsContent', controller.scheduleManual.listPostsContent);
 
   // 静态文件路由
   router.get('/combine', controller.static.combine);

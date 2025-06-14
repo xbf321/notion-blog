@@ -1,6 +1,6 @@
 module.exports = {
   schedule: {
-    interval: '10m',
+    interval: '5m',
     type: 'all',
   },
   async task(ctx) {

@@ -64,6 +64,7 @@ module.exports = appInfo => {
     notionAppKey: process.env.NOTION_APP_KEY || '',
     notionDatabaseId: process.env.NOTION_DATABASE_ID || '',
     siteDomain: process.env.SITE_DOMAIN || '',
+    logCenterServer: process.env.LOG_CENTER_SERVER || '',
   };
 
   return {

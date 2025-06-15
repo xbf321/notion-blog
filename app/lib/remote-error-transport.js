@@ -21,7 +21,7 @@ class RemoteErrorTransport extends Transport {
   }
 
   _sendRemoteServer(message) {
-    const { logCenterServer } = this.options.app.cache.siteInfo;
+    const { logCenterServer } = this.options.app.config;
     if (!logCenterServer) {
       return;
     }

@@ -20,3 +20,7 @@ tailwind.config.js
 config/config.local.js
 data
 config/config.local.js
+node_modules
+dist
+mocks
+README.md

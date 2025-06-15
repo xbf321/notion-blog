@@ -62,8 +62,9 @@ docker run -d -p 7110:7110 \
   -e NOTION_APP_KEY=auth \
   -e NOTION_DATABASE_ID=database_id \ 
   -e SITE_DOMAIN=site_domain \
+  -e LOG_CENTER_SERVER=log-center.server.com \
   -v /home/user/web/notion-blog/logs:/root/logs \
-  -v /home/user/web/notion-blog/data:/root/web/data \
+  -v /home/user/web/notion-blog/data:/app/data \
   --name notion-blog xbf321/notion-blog:latest
 ```
 
@@ -74,6 +75,7 @@ docker run -d -p 7110:7110 \
 | NOTION_APP_KEY  | Notion 访问令牌    |
 | NOTION_DATABASE_ID  | Notion 空间Id   |
 | SITE_DOMAIN  | 博客域名，如 https://xingbaifang.com，不要有尾 /   |
+| LOG_CENTER_SERVER  | 上报至日志中心，便于定位问题（若有，选填）  |
 
 如何找到 NOTION_APP_KEY 和 NOTION_DATABASE_ID？
 
@@ -89,11 +91,12 @@ services:
     image: xbf321/notion-blog:latest
     volumes:
       - ./notion-blog/logs:/root/logs
-      - ./notion-blog/data:/root/web/data
+      - ./notion-blog/data:/app/data
     environment:
       - NOTION_APP_KEY=key
       - NOTION_DATABASE_ID=id
       - SITE_DOMAIN=https://example.com
+      - LOG_CENTER_SERVER=xx
     restart: unless-stopped
     privileged: true
     ports:
@@ -125,6 +128,7 @@ docker-compose up -d
 NOTION_APP_KEY=
 NOTION_DATABASE_ID=
 SITE_DOMAIN=
+LOG_CENTER_SERVER=
 npm run start:daemon
 npm stop
 ```
@@ -151,7 +155,7 @@ npm stop
 
 ## 错误日志处理
 
-为了能及时收到错误信息，系统在发生「ERROR」类型错误时，会通过预先配置的 **logCenterServer** 变量，发送到远程服务中。发送格式：
+为了能及时收到错误信息，系统在发生「ERROR」类型错误时，会通过预先配置的 **LOG_CENTER_SERVER** 变量，发送到远程服务中。发送格式：
 
 ```js
 // app/lib/remote-error-transport.js
@@ -179,6 +183,7 @@ this.options.app.curl(logCenterServer, {
 * NOTION_APP_KEY
 * NOTION_DATABASE_ID
 * SITE_DOMAIN
+* LOG_CENTER_SERVER
 
 ### Notion 笔记中修改
 

@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "@notionhq/client": "^2.2.15",
-    "better-sqlite3": "^11.3.0",
+    "better-sqlite3": "^11.10.0",
     "clean-css": "^5.3.3",
     "download": "^8.0.0",
     "egg": "^3.17.5",
